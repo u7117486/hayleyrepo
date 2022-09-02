@@ -54,7 +54,7 @@ This task involves cloning your repository on your computer. Where should we pla
 
 ```{r, answer1, echo=TRUE, eval = FALSE}
 
-Because it won't keep track of your entire code in a good consistent format, it will just keep track of changes etc, when they are committed to the reposiotry. 
+## Because it won't keep track of your entire code in a good consistent format, it will just keep track of changes etc, when they are committed to the reposiotry. 
 
 ```
 
@@ -92,21 +92,39 @@ Make sure you have added a `data/` folder to your working directory that you jus
 
 Write your answer in the code chunk below:
 
-```{r, loaddata, eval = FALSE, echo=TRUE}
+```{r, loaddata, eval = TRUE, echo=TRUE}
 
-path <- "replace this text with your relative path to a file in the 'data/' folder"
+path <- "./data/OA_activitydat_20190302_BIOL3207.csv"
   
 data <- read_csv(path)
 
 ```
 
+```{r}
+## Omitting any rows that have NA data. 
+data_clean <- na.omit(data)
+data_clean
+```
+
+```{r}
+## Dropping irrelevant columns (comment and loc)
+data_cleaner <- subset(data_clean, select = -c(comment, loc))
+data_cleaner
+```
+
+```{r}
+## Checking that there are no spelling issues in species and treatment and create a table of summary data that includes:
+
+```
+
+
 Let's say that you added a new data folder that was inside an output folder (i.e., `output/data`) to your working directory. The purpose of this folder is to store and track your cleaned up data frame after you have done all your data wrangling and corrections. 
 
 >**Question 4**: Using the `write_csv` function how would you write the path name to save this file to `output/data`?
 
-```{r, write, eval = FALSE, echo=TRUE}
+```{r, write, eval = TRUE, echo=TRUE}
 
-path <- "replace this text with your relative path"
+path <- "./output/data/OA_activitydat_20190302_BIOL3207.csv"
 
 write_csv(data, file = path)
 
