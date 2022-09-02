@@ -100,24 +100,6 @@ data <- read_csv(path)
 
 ```
 
-```{r}
-## Omitting any rows that have NA data. 
-data_clean <- na.omit(data)
-data_clean
-```
-
-```{r}
-## Dropping irrelevant columns (comment and loc)
-data_cleaner <- subset(data_clean, select = -c(comment, loc))
-data_cleaner
-```
-
-```{r}
-## Checking that there are no spelling issues in species and treatment and create a table of summary data that includes:
-summary <- data_cleaner %>% group_by(species, treatment) %>% summarise(mean(activity), sd(activity), n())
-flextable(summary)
-```
-
 
 Let's say that you added a new data folder that was inside an output folder (i.e., `output/data`) to your working directory. The purpose of this folder is to store and track your cleaned up data frame after you have done all your data wrangling and corrections. 
 
@@ -140,18 +122,19 @@ First, write some code below to remove missing data
 
 ```{r, rmMiss}
 # Code to removing missing data from the `OA_activitydat_20190302_BIOL3207.csv` data frame. 
-
+data_clean <- na.omit(data)
+data_clean
 ```
 
 Second, drop out irrelevant columns and check that there are no spelling issues in `species` and `treatment`. Create a table of summary data that includes: 1) the mean, 2) the standard error and 3) the sample sizes of unique fish across ALL six fish species for each treatment. This will also help you detect any spelling errors. You can use the R package [`flextable`](https://ardata-fr.github.io/flextable-book/) to print out the results in a nice neat format! If you haven't heard about `flextable` spend 10 or so minutes having a look at it's functionality. It's incredible! You'll use this for tables throughout.
 
 ```{r summaryTab}
 # Drop irrelevant columns
-
+data_cleaner <- subset(data_clean, select = -c(comment, loc))
 # Check spelling in species and treatment but also generate a summary table
-
+summary <- data_cleaner %>% group_by(species, treatment) %>% summarise(mean(activity), sd(activity), n())
 # Use flextable to render the summary table in a tidy format
-
+flextable(summary)
 ```
 
 **STOP**: Before moving on, it's a good time to establish some good *GitHub* practices. You have just done an important step. It's time to save this file, stage it and commit it so that you have a record. Push these changes up using *GitHub Desktop*. It's important to do this frequently. It's probably not needed after every line of code, but it's good to do this when you have completed an important coding step. Of course, there's no harm in doing it more often. It will provide fine-scale tracking for you!
@@ -159,7 +142,7 @@ Second, drop out irrelevant columns and check that there are no spelling issues 
 >**Question 5**: The new version of your Rmarkdown file should now be up on *GitHub*. In the browser window click on your most recent commit. Have a look at the file versioning system. You will notice two files side-by-side. Describe what you notice is being presented online. What do the red and green highlights mean?
 
 ```{r answer5, echo=TRUE, eval=FALSE}
-## Write your answer here....remember to use '#" in front of your text.
+## Red is deleted text, and green is new text. 
 ```
 
 # **Task 5**
@@ -171,7 +154,9 @@ Ignoring figures can be important because they take up quite a lot of space in y
 ```{r, prettyfig, fig.align='center', fig.cap="add a legend here"}
 # ggplot figure showing mean activity for each treatment (Control, OA) for each species.
 
-
+ggplot(data_cleaner, aes(x=species, y=activity, colour=treatment))+
+  geom_boxplot()+
+  theme_bw()
 ```
 
 **Stretch Task**: The Clark et al. 2020 paper plots some pretty pictures on their figures. You have access to a folder called "pics/". Add the pics of the difference species from the "pics/" folder to your new plot. Explore the function `annotation_raster()` which might help you achieve this goal.
@@ -183,12 +168,15 @@ Now that you have the figure you may also want to write / save it as a separate 
 ```{r, savefig}
 # Use ggsave to save the figure
 
+ggsave('output/figures/species_v_activity', device = png,  width = 6, height = 4)
 ```
 
 >**Question 6**: Given that you have added `output/figures/` to your `.gitignore` file describe what you notice about what you see in *GitHub Desktop*. 
 
 ```{r}
 ## Write your answer here
+
+getwd()
 ```
 
 Last question for this task. I promise! It's important to think very carefully about what you track and ignore.
@@ -235,6 +223,14 @@ Once you have figured out how to create and solve conflicts it's time to update 
 **Task**: Provide details about the workflow (i.e., which files are used, when and why) and write a detailed description of the data file used. Include the details about what the column means and which data file someone should use. 
 
 Think about what you would need to know to make sure you can replicate a study. Provide these details so they are easy to find on the README.
+
+```{r}
+## Task 7.5 - it said there was a conflicted file
+
+## Task 7.7 - It has mashed together our two commits into the file. 
+
+```
+
 
 # **Task 8**
 There's not too much to do in this task on the coding front! You just need to create a *GitHub* issue and create a 'To Do' list on *GitHub* for you and your collaborator. 
