@@ -114,7 +114,8 @@ data_cleaner
 
 ```{r}
 ## Checking that there are no spelling issues in species and treatment and create a table of summary data that includes:
-
+summary <- data_cleaner %>% group_by(species, treatment) %>% summarise(mean(activity), sd(activity), n())
+flextable(summary)
 ```
 
 
