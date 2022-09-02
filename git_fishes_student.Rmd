@@ -174,9 +174,7 @@ ggsave('output/figures/species_v_activity', device = png,  width = 6, height = 4
 >**Question 6**: Given that you have added `output/figures/` to your `.gitignore` file describe what you notice about what you see in *GitHub Desktop*. 
 
 ```{r}
-## Write your answer here
-
-getwd()
+## I see the file path that I wrote in the text file, nothing else happened. 
 ```
 
 Last question for this task. I promise! It's important to think very carefully about what you track and ignore.
